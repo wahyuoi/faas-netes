@@ -45,7 +45,7 @@ spec:
         - name: secret_mount_path
           value: "/etc/openfaas"
         - name: scale_from_zero
-          value: "false"
+          value: "true"
 
         ports:
         - containerPort: 8080
