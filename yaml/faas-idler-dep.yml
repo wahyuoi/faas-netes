@@ -1,0 +1,30 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: faas-idler
+  namespace: openfaas
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: faas-idler
+    spec:
+      containers:
+      - name: faas-idler
+        image: openfaas/faas-idler:0.1.7
+        imagePullPolicy: Always
+        env:
+          - name: gateway_url
+            value: "http://gateway.openfaas:8080/"
+          - name: prometheus_host
+            value: "prometheus.openfaas"
+          - name: prometheus_port
+            value: "9090"
+          - name: inactivity_duration
+            value: "1m"
+          - name: reconcile_interval
+            value: "30s"
+        command:
+          - /home/app/faas-idler
+          - -dry-run=false
